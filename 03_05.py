@@ -20,7 +20,6 @@ if not os.path.exists(RUN_FOLDER):
 
 mode =  'build' #'load' #
 
-
 DATA_FOLDER = './data/celeb/'
 
 INPUT_DIM = (128,128,3)

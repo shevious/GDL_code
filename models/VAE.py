@@ -46,9 +46,9 @@ class VAEModel(Model):
         grads = tape.gradient(total_loss, self.trainable_weights)
         self.optimizer.apply_gradients(zip(grads, self.trainable_weights))
         return {
-            "loss": total_loss,
-            "reconstruction_loss": reconstruction_loss,
-            "kl_loss": kl_loss,
+            "loss": tf.reduce_mean(total_loss),
+            "reconstruction_loss": tf.reduce_mean(reconstruction_loss),
+            "kl_loss": tf.reduce_mean(kl_loss),
         }
 
     def call(self,inputs):
