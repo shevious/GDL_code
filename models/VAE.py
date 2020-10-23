@@ -36,19 +36,24 @@ class VAEModel(Model):
             z_mean, z_log_var, z = self.encoder(data)
             reconstruction = self.decoder(z)
             reconstruction_loss = tf.reduce_mean(
-                tf.square(data - reconstruction), axis = [1,2,3]
+                #tf.square(data - reconstruction), axis = [1,2,3]
+                keras.losses.binary_crossentropy(data, reconstruction)
             )
             reconstruction_loss *= self.r_loss_factor
             kl_loss = 1 + z_log_var - tf.square(z_mean) - tf.exp(z_log_var)
             kl_loss = tf.reduce_sum(kl_loss, axis = 1)
             kl_loss *= -0.5
+            kl_loss = tf.reduce_mean(kl_loss)
             total_loss = reconstruction_loss + kl_loss
         grads = tape.gradient(total_loss, self.trainable_weights)
         self.optimizer.apply_gradients(zip(grads, self.trainable_weights))
         return {
-            "loss": tf.reduce_mean(total_loss),
-            "reconstruction_loss": tf.reduce_mean(reconstruction_loss),
-            "kl_loss": tf.reduce_mean(kl_loss),
+            #"loss": tf.reduce_mean(total_loss),
+            #"reconstruction_loss": tf.reduce_mean(reconstruction_loss),
+            #"kl_loss": tf.reduce_mean(kl_loss),
+            "loss": total_loss,
+            "reconstruction_loss": reconstruction_loss,
+            "kl_loss": kl_loss,
         }
 
     def call(self,inputs):
@@ -223,7 +228,7 @@ class VariationalAutoencoder():
             , shuffle = True
             , epochs = epochs
             , initial_epoch = initial_epoch
-            , callbacks = callbacks_list
+            #, callbacks = callbacks_list
         )
 
 
