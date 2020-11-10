@@ -82,7 +82,6 @@ x = LeakyReLU()(x)
 x = Dropout(rate = 0.25)(x)
 x = Conv2D(64, 3, strides=2, padding="same", name='encoder_conv_3')(x)
 x = BatchNormalization()(x)
-x = Dropout(rate = 0.25)(x)
 x = LeakyReLU()(x)
 x = Dropout(rate = 0.25)(x)
 shape_before_flattening = K.int_shape(x)[1:]

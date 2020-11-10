@@ -24,6 +24,12 @@ with open(os.path.join(RUN_FOLDER, 'params.pkl'), 'rb') as f:
 
 vae = VariationalAutoencoder(*params)
 
-#prevents error
-vae.model.predict(x_train[0:1])
-vae.load_weights(os.path.join(RUN_FOLDER, 'weights/weights.h5'))
+#x = np.random.rand(1, 28, 28, 1)
+#vae.model.predict(x)
+#vae.load_weights(os.path.join(RUN_FOLDER, 'weights/weights.h5'))
+#vae.model.save(os.path.join(RUN_FOLDER, 'weights'))
+#vae.model.save(os.path.join(RUN_FOLDER, 'weights'))
+#vae.model.encoder.summary()
+from tensorflow import keras
+vae.model = keras.models.load_model(os.path.join(RUN_FOLDER, 'weights'))
+vae.model.encoder.summary()

@@ -16,8 +16,8 @@ if not os.path.exists(RUN_FOLDER):
     os.mkdir(os.path.join(RUN_FOLDER, 'images'))
     os.mkdir(os.path.join(RUN_FOLDER, 'weights'))
 
-#mode =  'build' #'load' #
-mode =  'load' #'load' #
+mode =  'build' #'load' #
+#mode =  'load' #'load' #
 
 (x_train, y_train), (x_test, y_test) = load_mnist()
 
